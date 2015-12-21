@@ -1,11 +1,9 @@
 package com.ppg.magicmirror;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -32,13 +30,10 @@ public class LoginActivity extends AppCompatActivity{
 
         callbackManager = CallbackManager.Factory.create();
 
-        final Context context = this;
-
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        Log.d("success", "success");
                         Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
                         LoginActivity.this.finish();
                         overridePendingTransition(0, 0);
@@ -48,12 +43,10 @@ public class LoginActivity extends AppCompatActivity{
 
                     @Override
                     public void onCancel() {
-                        Log.d("success", "Cancel");
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
-                        Log.d("success", "Error");
                     }
                 });
     }
