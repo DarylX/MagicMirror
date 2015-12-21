@@ -13,6 +13,8 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.ppg.magicmirror.utility.Util;
 
+import java.util.Arrays;
+
 /**
  * Login with facebook
  */
@@ -34,6 +36,9 @@ public class LoginActivity extends AppCompatActivity{
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
+                        LoginManager.getInstance().logInWithReadPermissions(
+                                LoginActivity.this,
+                                Arrays.asList("public_profile,user_photos"));
                         Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
                         LoginActivity.this.finish();
                         overridePendingTransition(0, 0);
