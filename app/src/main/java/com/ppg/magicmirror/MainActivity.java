@@ -15,20 +15,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.facebook.AccessToken;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.Profile;
 
-public class ProfileActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -51,7 +50,8 @@ public class ProfileActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         Log.d("User Id", AccessToken.getCurrentAccessToken().getUserId().toString());
         Log.d("User Name", Profile.getCurrentProfile().getFirstName());
-        Log.d("Photo URI", Profile.getCurrentProfile().getProfilePictureUri(50,50).toString());
+        Log.d("Photo URI", Profile.getCurrentProfile().getProfilePictureUri(50, 50).toString());
+
         new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
                 "/"+AccessToken.getCurrentAccessToken().getUserId().toString()+"/albums",
@@ -61,6 +61,7 @@ public class ProfileActivity extends AppCompatActivity
                     public void onCompleted(GraphResponse response) {
                         /* handle the result */
                         Log.d("Result",response.toString());
+
                     }
                 }
         ).executeAsync();
