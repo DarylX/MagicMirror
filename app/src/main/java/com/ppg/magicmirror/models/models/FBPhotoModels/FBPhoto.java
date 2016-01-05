@@ -8,8 +8,8 @@ import com.google.gson.annotations.SerializedName;
 public class FBPhoto {
 
     @SerializedName("created_time")
-    String created_time;
+    public String created_time;
 
     @SerializedName("id")
-    String id;
+    public String id;
 }

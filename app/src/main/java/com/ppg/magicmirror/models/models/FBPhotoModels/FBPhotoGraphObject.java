@@ -11,8 +11,8 @@ import java.util.List;
 public class FBPhotoGraphObject {
 
     @SerializedName("data")
-    List<FBPhoto> photos;
+    public List<FBPhoto> photos;
 
     @SerializedName("paging")
-    Paging paging;
+    public Paging paging;
 }

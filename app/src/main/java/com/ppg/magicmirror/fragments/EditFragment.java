@@ -1,6 +1,7 @@
 package com.ppg.magicmirror.fragments;
 
 import android.content.Context;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -19,6 +21,8 @@ import com.ppg.magicmirror.R;
 import com.google.android.gms.plus.PlusOneButton;
 import com.ppg.magicmirror.models.models.FBAlbumModels.FBAlbumsGraphObject;
 import com.ppg.magicmirror.models.models.FBPhotoModels.FBPhotoGraphObject;
+import com.ppg.magicmirror.models.models.FBPhotoModels.FBPhotoImageGraphObject;
+import com.squareup.picasso.Picasso;
 
 /**
  * A fragment with a Google +1 button.
@@ -111,8 +115,29 @@ public class EditFragment extends Fragment {
                                     public void onCompleted(GraphResponse response) {
                         /* handle the result */
                                         Gson gson = new Gson();
-                                        Log.d("Result", response.getRawResponse());
-                                        final FBPhotoGraphObject ob = gson.fromJson(response.getRawResponse(), FBPhotoGraphObject.class);
+                                        Log.d("Photos in Album Result", response.getRawResponse());
+                                        final FBPhotoGraphObject po = gson.fromJson(response.getRawResponse(), FBPhotoGraphObject.class);
+                                        GraphRequest request = new GraphRequest(
+                                                AccessToken.getCurrentAccessToken(),
+                                                "/"+po.photos.get(0).id,
+                                                null,
+                                                HttpMethod.GET,
+                                                new GraphRequest.Callback() {
+                                                    public void onCompleted(GraphResponse response) {
+                                                        /* handle the result */
+                                                        Gson gson = new Gson();
+                                                        final FBPhotoImageGraphObject pio = gson.fromJson(response.getRawResponse(), FBPhotoImageGraphObject.class);
+                                                        ImageView iw = (ImageView)getActivity().findViewById(R.id.imageView2);
+                                                        Picasso.with(getActivity()).load(pio.images.get(0).getSource()).into(iw);
+                                                    }
+                                                }
+
+
+                                        );
+                                        Bundle parameters = new Bundle();
+                                        parameters.putString("fields", "images");
+                                        request.setParameters(parameters);
+                                        request.executeAsync();
                                     }
                                 }
                         ).executeAsync();
