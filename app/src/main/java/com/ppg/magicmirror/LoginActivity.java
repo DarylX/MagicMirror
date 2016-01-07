@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity{
                         LoginManager.getInstance().logInWithReadPermissions(
                                 LoginActivity.this,
                                 Arrays.asList("public_profile,user_photos"));
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, PhotoPickActivity.class);
                         LoginActivity.this.finish();
                         overridePendingTransition(0, 0);
                         startActivity(intent);
