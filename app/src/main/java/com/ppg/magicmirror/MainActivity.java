@@ -1,5 +1,6 @@
 package com.ppg.magicmirror;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -23,6 +24,20 @@ public class MainActivity extends AppCompatActivity
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                //Switch Statement in case we need more menu items
+                switch (item.getItemId()) {
+                    case R.id.action_settings:
+                        Intent intent = new Intent(MainActivity.this, PhotoPickActivity.class);
+                        overridePendingTransition(0, 0);
+                        startActivity(intent);
+                        break;
+                }
+                return true;
+            }
+        });
         setSupportActionBar(toolbar);
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -91,6 +106,9 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(MainActivity.this, PhotoPickActivity.class);
+            overridePendingTransition(0, 0);
+            startActivity(intent);
             return true;
         }
 
