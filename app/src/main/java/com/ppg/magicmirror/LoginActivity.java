@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity{
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        Intent intent = new Intent(LoginActivity.this, PhotoPickActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         LoginActivity.this.finish();
                         overridePendingTransition(0, 0);
                         startActivity(intent);

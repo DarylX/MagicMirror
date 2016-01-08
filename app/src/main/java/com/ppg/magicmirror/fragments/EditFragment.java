@@ -93,58 +93,8 @@ public class EditFragment extends Fragment {
         Log.d("User Name", Profile.getCurrentProfile().getFirstName());
         Log.d("Photo URI", Profile.getCurrentProfile().getProfilePictureUri(50, 50).toString());
 
-        new GraphRequest(
-                AccessToken.getCurrentAccessToken(),
-                "/"+AccessToken.getCurrentAccessToken().getUserId().toString()+"/albums",
-                null,
-                HttpMethod.GET,
-                new GraphRequest.Callback() {
-                    public void onCompleted(GraphResponse response) {
-                        /* handle the result */
-                        Log.d("Result", response.getRawResponse());
-                        Gson gson = new Gson();
-                        final FBAlbumsGraphObject ob = gson.fromJson(response.getRawResponse(), FBAlbumsGraphObject.class);
-
-
-                        new GraphRequest(
-                        AccessToken.getCurrentAccessToken(),
-                                "/" + ob.Albums.get(0).id + "/photos",
-                                null,
-                                HttpMethod.GET,
-                                new GraphRequest.Callback() {
-                                    public void onCompleted(GraphResponse response) {
-                        /* handle the result */
-                                        Gson gson = new Gson();
-                                        Log.d("Photos in Album Result", response.getRawResponse());
-                                        final FBPhotoGraphObject po = gson.fromJson(response.getRawResponse(), FBPhotoGraphObject.class);
-                                        GraphRequest request = new GraphRequest(
-                                                AccessToken.getCurrentAccessToken(),
-                                                "/"+po.photos.get(0).id,
-                                                null,
-                                                HttpMethod.GET,
-                                                new GraphRequest.Callback() {
-                                                    public void onCompleted(GraphResponse response) {
-                                                        /* handle the result */
-                                                        Gson gson = new Gson();
-                                                        final FBPhotoImageGraphObject pio = gson.fromJson(response.getRawResponse(), FBPhotoImageGraphObject.class);
-                                                        ImageView iw = (ImageView)getActivity().findViewById(R.id.imageView2);
-                                                        Picasso.with(getActivity()).load(pio.images.get(0).getSource()).into(iw);
-                                                    }
-                                                }
-
-
-                                        );
-                                        Bundle parameters = new Bundle();
-                                        parameters.putString("fields", "images");
-                                        request.setParameters(parameters);
-                                        request.executeAsync();
-                                    }
-                                }
-                        ).executeAsync();
-
-                    }
-                }
-        ).executeAsync();
+        ImageView iw = (ImageView)getActivity().findViewById(R.id.imageView2);
+        //Picasso.with(getActivity()).load(pio.images.get(0).getSource()).into(iw);
 
         return view;
     }

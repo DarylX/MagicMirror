@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Daryl on 1/7/2016.
+ * Fragment that holds all the albums. Makes the call to Graph API for the albums.
  */
 public class AlbumPickerFragment extends Fragment {
 
@@ -83,7 +84,6 @@ public class AlbumPickerFragment extends Fragment {
                             request.setParameters(parameters);
                             batch.add(request);
                         }
-
 
                         batch.addCallback(new GraphRequestBatch.Callback() {
                             @Override
