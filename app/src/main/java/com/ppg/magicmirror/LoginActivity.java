@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -11,6 +12,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.ppg.magicmirror.utility.Util;
 
 import java.util.Arrays;
@@ -32,13 +34,11 @@ public class LoginActivity extends AppCompatActivity{
 
         callbackManager = CallbackManager.Factory.create();
 
+        ((LoginButton)this.findViewById(R.id.login_button)).setReadPermissions("public_profile","user_photos");
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        LoginManager.getInstance().logInWithReadPermissions(
-                                LoginActivity.this,
-                                Arrays.asList("public_profile,user_photos"));
                         Intent intent = new Intent(LoginActivity.this, PhotoPickActivity.class);
                         LoginActivity.this.finish();
                         overridePendingTransition(0, 0);
