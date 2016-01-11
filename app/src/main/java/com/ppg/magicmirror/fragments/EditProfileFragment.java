@@ -1,7 +1,8 @@
 package com.ppg.magicmirror.fragments;
 
+import android.app.Activity;
 import android.content.Context;
-import android.media.Image;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,15 +13,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.Profile;
-import com.google.gson.Gson;
 import com.ppg.magicmirror.R;
-import com.ppg.magicmirror.models.models.FBAlbumModels.FBAlbumsGraphObject;
-import com.ppg.magicmirror.models.models.FBPhotoModels.FBPhotoGraphObject;
-import com.ppg.magicmirror.models.models.FBPhotoModels.FBPhotoImageGraphObject;
+import com.ppg.magicmirror.activities.MainActivity;
+import com.ppg.magicmirror.activities.PhotoPickActivity;
 import com.ppg.magicmirror.utility.UserStorage;
 import com.squareup.picasso.Picasso;
 
@@ -29,12 +25,15 @@ import java.util.ArrayList;
 /**
  * A fragment with a Google +1 button.
  * Activities that contain this fragment must implement the
- * {@link EditFragment.OnFragmentInteractionListener} interface
+ * {@link EditProfileFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link EditFragment#newInstance} factory method to
+ * Use the {@link EditProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EditFragment extends Fragment {
+public class EditProfileFragment extends Fragment {
+
+    Context context;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -49,7 +48,7 @@ public class EditFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public EditFragment() {
+    public EditProfileFragment() {
         // Required empty public constructor
     }
 
@@ -59,11 +58,11 @@ public class EditFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment EditFragment.
+     * @return A new instance of fragment EditProfileFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static EditFragment newInstance(String param1, String param2) {
-        EditFragment fragment = new EditFragment();
+    public static EditProfileFragment newInstance(String param1, String param2) {
+        EditProfileFragment fragment = new EditProfileFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -74,23 +73,28 @@ public class EditFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        this.context = this.getActivity();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_edit, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
         // TODO: TAKE OUT AND PUT SOMEWHERE ELSE
         Log.d("User Id", AccessToken.getCurrentAccessToken().getUserId().toString());
         Log.d("User Name", Profile.getCurrentProfile().getFirstName());
         Log.d("Photo URI", Profile.getCurrentProfile().getProfilePictureUri(50, 50).toString());
 
+        view.findViewById(R.id.imageView2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,PhotoPickActivity.class);
+                ((Activity)context).overridePendingTransition(0, 0);
+                startActivity(intent);
+            }
+        });
 
 
         return view;

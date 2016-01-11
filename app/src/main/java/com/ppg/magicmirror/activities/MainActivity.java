@@ -1,5 +1,6 @@
 package com.ppg.magicmirror.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,44 +12,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.ppg.magicmirror.R;
-import com.ppg.magicmirror.fragments.EditFragment;
+import com.ppg.magicmirror.fragments.EditProfileFragment;
+import com.ppg.magicmirror.fragments.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, EditFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, EditProfileFragment.OnFragmentInteractionListener {
+
+    Toolbar toolbar;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                //Switch Statement in case we need more menu items
-                switch (item.getItemId()) {
-                    case R.id.action_settings:
-                        Intent intent = new Intent(MainActivity.this, PhotoPickActivity.class);
-                        overridePendingTransition(0, 0);
-                        startActivity(intent);
-                        break;
-                }
-                return true;
-            }
-        });
-        setSupportActionBar(toolbar);
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-*/
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        context = this;
+
+        setSupportActionBar(toolbar);
+        setupToolbar();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -68,11 +54,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             // Create a new Fragment to be placed in the activity layout
-            EditFragment firstFragment = new EditFragment();
-
-            // In case this activity was started with special instructions from an
-            // Intent, pass the Intent's extras to the fragment as arguments
-            firstFragment.setArguments(getIntent().getExtras());
+            ProfileFragment firstFragment = new ProfileFragment();
 
             // Add the fragment to the 'fragment_container' FrameLayout
             getSupportFragmentManager().beginTransaction()
@@ -93,7 +75,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.profile, menu);
+        getMenuInflater().inflate(R.menu.toolbar, menu);
         return true;
     }
 
@@ -102,15 +84,6 @@ public class MainActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(MainActivity.this, PhotoPickActivity.class);
-            overridePendingTransition(0, 0);
-            startActivity(intent);
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -143,5 +116,30 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    private void setupToolbar(){
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.hideOverflowMenu();
+        toolbar.showContextMenu();
+        toolbar.inflateMenu(R.menu.toolbar);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                //Switch Statement in case we need more menu items
+                switch (item.getItemId()) {
+                    case R.id.settings:
+                        // Create a new Fragment to be placed in the activity layout
+                        EditProfileFragment editProfileFragment = new EditProfileFragment();
+
+                        // Add the fragment to the 'fragment_container' FrameLayout
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.container, editProfileFragment).addToBackStack(null).commit();
+
+                        break;
+                }
+                return true;
+            }
+        });
     }
 }
