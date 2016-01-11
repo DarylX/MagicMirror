@@ -1,10 +1,11 @@
-package com.ppg.magicmirror;
+package com.ppg.magicmirror.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.facebook.FacebookSdk;
 
+import com.ppg.magicmirror.R;
 import com.ppg.magicmirror.fragments.AlbumPickerFragment;
 
 /**
@@ -16,7 +17,6 @@ public class PhotoPickActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_picker);
-        FacebookSdk.sdkInitialize(this);
 
         AlbumPickerFragment firstFragment = new AlbumPickerFragment();
 

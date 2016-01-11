@@ -18,7 +18,6 @@ import com.facebook.HttpMethod;
 import com.facebook.Profile;
 import com.google.gson.Gson;
 import com.ppg.magicmirror.R;
-import com.google.android.gms.plus.PlusOneButton;
 import com.ppg.magicmirror.models.models.FBAlbumModels.FBAlbumsGraphObject;
 import com.ppg.magicmirror.models.models.FBPhotoModels.FBPhotoGraphObject;
 import com.ppg.magicmirror.models.models.FBPhotoModels.FBPhotoImageGraphObject;
@@ -47,7 +46,6 @@ public class EditFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private PlusOneButton mPlusOneButton;
 
     private OnFragmentInteractionListener mListener;
 
@@ -88,9 +86,6 @@ public class EditFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit, container, false);
 
-        //Find the +1 button
-        mPlusOneButton = (PlusOneButton) view.findViewById(R.id.plus_one_button);
-
         // TODO: TAKE OUT AND PUT SOMEWHERE ELSE
         Log.d("User Id", AccessToken.getCurrentAccessToken().getUserId().toString());
         Log.d("User Name", Profile.getCurrentProfile().getFirstName());
@@ -105,8 +100,6 @@ public class EditFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        // Refresh the state of the +1 button each time the activity receives focus.
-        mPlusOneButton.initialize(PLUS_ONE_URL, PLUS_ONE_REQUEST_CODE);
         ImageView iw = (ImageView)getActivity().findViewById(R.id.imageView2);
         ArrayList<String> pictures = UserStorage.getPictures(getActivity());
         if(pictures.size() != 0 && pictures.get(0) != null)
