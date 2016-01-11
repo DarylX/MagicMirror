@@ -20,6 +20,8 @@ import com.ppg.magicmirror.adapters.PhotoPickerAdapter;
 import com.ppg.magicmirror.models.models.FBAlbumModels.FBAlbum;
 import com.ppg.magicmirror.models.models.FBPhotoModels.FBPhotoGraphObject;
 import com.ppg.magicmirror.models.models.FBPhotoModels.FBPhotoImageGraphObject;
+import com.ppg.magicmirror.utility.UserStorage;
+import com.ppg.magicmirror.utility.Util;
 
 import java.util.ArrayList;
 
@@ -94,8 +96,9 @@ public class PhotoPickerFragment extends Fragment {
                                 gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     public void onItemClick(AdapterView<?> parent, View v,
                                                             int position, long id) {
-                                        Toast.makeText(getContext(), "" + position,
-                                                Toast.LENGTH_SHORT).show();
+                                        ArrayList<String> s = new ArrayList<String>();
+                                        s.add(photoUrls.get(position));
+                                        UserStorage.savePictures(getActivity().getApplicationContext(), s);
                                     }
                                 });
                             }});

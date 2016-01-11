@@ -22,7 +22,10 @@ import com.google.android.gms.plus.PlusOneButton;
 import com.ppg.magicmirror.models.models.FBAlbumModels.FBAlbumsGraphObject;
 import com.ppg.magicmirror.models.models.FBPhotoModels.FBPhotoGraphObject;
 import com.ppg.magicmirror.models.models.FBPhotoModels.FBPhotoImageGraphObject;
+import com.ppg.magicmirror.utility.UserStorage;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 /**
  * A fragment with a Google +1 button.
@@ -93,8 +96,7 @@ public class EditFragment extends Fragment {
         Log.d("User Name", Profile.getCurrentProfile().getFirstName());
         Log.d("Photo URI", Profile.getCurrentProfile().getProfilePictureUri(50, 50).toString());
 
-        ImageView iw = (ImageView)getActivity().findViewById(R.id.imageView2);
-        //Picasso.with(getActivity()).load(pio.images.get(0).getSource()).into(iw);
+
 
         return view;
     }
@@ -105,6 +107,10 @@ public class EditFragment extends Fragment {
 
         // Refresh the state of the +1 button each time the activity receives focus.
         mPlusOneButton.initialize(PLUS_ONE_URL, PLUS_ONE_REQUEST_CODE);
+        ImageView iw = (ImageView)getActivity().findViewById(R.id.imageView2);
+        ArrayList<String> pictures = UserStorage.getPictures(getActivity());
+        if(pictures.size() != 0 && pictures.get(0) != null)
+            Picasso.with(getActivity()).load(pictures.get(0)).into(iw);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
