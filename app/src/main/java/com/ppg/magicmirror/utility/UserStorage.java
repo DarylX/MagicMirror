@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.firebase.client.Firebase;
+
 import java.util.ArrayList;
 
 /**
@@ -38,4 +40,9 @@ public class UserStorage {
 
         return strings;
     }
+
+    static public void saveToDatabase(){
+        Firebase myFirebaseRef = new Firebase("https://sweltering-heat-7703.firebaseio.com/");
+    }
+
 }
