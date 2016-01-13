@@ -4,26 +4,29 @@
     android:layout_height="match_parent"
     tools:context=".editFragment">
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="\ud83d\ude02"
         android:id="@+id/button"
-        android:layout_gravity="left|bottom" />
+        android:layout_gravity="left|bottom"
+        android:textSize="@dimen/abc_text_size_display_2_material" />
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="\ud83d\ude0f"
         android:id="@+id/button2"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:layout_gravity="center_horizontal|bottom"
+        android:textSize="@dimen/abc_text_size_display_2_material" />
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="\ud83d\ude0d"
         android:id="@+id/button3"
-        android:layout_gravity="right|bottom" />
+        android:layout_gravity="right|bottom"
+        android:textSize="@dimen/abc_text_size_display_2_material" />
 
     <ImageView
         android:layout_width="match_parent"

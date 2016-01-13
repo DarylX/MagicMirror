@@ -20,6 +20,7 @@ import com.ppg.magicmirror.adapters.PhotoPickerAdapter;
 import com.ppg.magicmirror.models.models.FBAlbumModels.FBAlbum;
 import com.ppg.magicmirror.models.models.FBPhotoModels.FBPhotoGraphObject;
 import com.ppg.magicmirror.models.models.FBPhotoModels.FBPhotoImageGraphObject;
+import com.ppg.magicmirror.models.models.User;
 import com.ppg.magicmirror.utility.UserStorage;
 import com.ppg.magicmirror.utility.Util;
 
@@ -98,6 +99,7 @@ public class PhotoPickerFragment extends Fragment {
                                                             int position, long id) {
                                         ArrayList<String> s = new ArrayList<String>();
                                         s.add(photoUrls.get(position));
+                                        User.updatePhoto(AccessToken.getCurrentAccessToken(),photoUrls.get(position));
                                         UserStorage.savePictures(getActivity().getApplicationContext(), s);
                                     }
                                 });
