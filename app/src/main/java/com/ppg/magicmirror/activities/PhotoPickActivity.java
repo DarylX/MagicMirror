@@ -21,6 +21,6 @@ public class PhotoPickActivity extends AppCompatActivity {
         AlbumPickerFragment firstFragment = new AlbumPickerFragment();
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.picker_container, firstFragment).commit();
+                .add(R.id.container_picker, firstFragment).commit();
     }
 }
